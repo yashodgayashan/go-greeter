@@ -15,7 +15,4 @@ templates:
     env:
       - name: SONAR_PROJECT_KEY
         value: "hello"
-    volumeMounts:
-      - name: "workflows-volume"
-        mountPath: "/tmp"
     
