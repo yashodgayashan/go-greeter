@@ -18,10 +18,4 @@ templates:
     volumeMounts:
       - name: "workflows-volume"
         mountPath: "/tmp"
-    resources:
-      requests:
-        memory: 128Mi
-        cpu: 100m
-      limits:
-        cpu: 200m
     
