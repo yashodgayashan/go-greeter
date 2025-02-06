@@ -3,5 +3,38 @@ steps:
     template: choreo/dockerfile-scan@v1
   - name: Docker Build
     template: choreo/docker-build@v1
+  - name: Static Code Analysis
+    template: sonar-qube
   - name: Vulnerability Scan
     template: choreo/trivy-scan@v1
+templates:
+  - name: sonar-qube
+    inlineScript: |
+      #!/bin/bash
+      echo "Starting SonarQube scan..." 
+      sonar-scanner \ 
+      -Dsonar.projectKey="$SONAR_PROJECT_KEY" \ 
+      -Dsonar.sources="$SOURCE_DIR" \ 
+      -Dsonar.host.url="$SONAR_HOST_URL" \ 
+      -Dsonar.login="$SONAR_TOKEN"
+      if [ $? -eq 0 ]; then 
+        echo "SonarQube scan completed successfully." 
+        exit 0 
+      else 
+        echo "SonarQube scan failed. Check the logs for details." 
+        exit 1 
+      fi
+    env:
+      - name: SONAR_PROJECT_KEY
+        value: "hello"
+    volumeMounts:
+      - name: "workflows-volume"
+        mountPath: "/tmp"
+    resources:
+      requests:
+        memory: 128Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 200m
+    
