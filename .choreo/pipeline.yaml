@@ -15,4 +15,8 @@ templates:
     env:
       - name: SONAR_PROJECT_KEY
         value: "hello"
+      - name: SONAR_PROJECT_VAL
+        value: {{SECRETS.val}}
+      - name: SONAR_PROJECT_VAL
+        value: {{VARIABLES.val}}
     
