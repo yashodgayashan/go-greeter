@@ -1,6 +1,6 @@
 # Choreo Samples
 
-## Sample Go Greeter
+## Sample Go Greeter:
 
 #### Use the following config when creating this component in Choreo:
 
