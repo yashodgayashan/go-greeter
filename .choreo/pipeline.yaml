@@ -5,8 +5,6 @@ steps:
     template: choreo/docker-build@v1
   - name: Static Code Analysis
     template: sonar-qube
-  - name: Argo Code Analysis
-    template: sonar-qube-2
   - name: Vulnerability Scan
     template: choreo/trivy-scan@v1
 templates:
@@ -29,12 +27,4 @@ templates:
         value: "{{VARIABLES.DB_HOST}}"
       - name: SONAR_PROJECT_VAL_2
         value: "{{VARIABLES.var_one}}"
-  - name: sonar-qube-2
-    script:
-      image: ubuntu:latest
-      command:
-        - "sh"
-      source: |
-        #!/bin/bash
-        echo "Starting SonarQube scan..."
   
