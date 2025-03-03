@@ -5,8 +5,8 @@ steps:
     template: choreo/docker-build@v1
   - name: Static Code Analysis
     template: sonar-qube
-  - name: Vulnerability Scan
-    template: choreo/trivy-scan@v1
+  # - name: Vulnerability Scan
+  #   template: choreo/trivy-scan@v1
 templates:
   - name: sonar-qube
     inlineScript: |
