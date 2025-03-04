@@ -27,4 +27,3 @@ templates:
         value: "{{VARIABLES.DB_HOST}}"
       - name: SONAR_PROJECT_VAL_2
         value: "{{VARIABLES.var_one}}"
-  
