@@ -40,7 +40,7 @@ templates:
       #!/bin/bash
       echo "Starting SonarQube scan..."
       exit 1
-  - name: sonar-qube-2
+  - name: sonar-qube-3
     inlineScript: |
       #!/bin/bash
       echo "Starting SonarQube scan...222"
