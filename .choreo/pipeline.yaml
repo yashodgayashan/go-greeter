@@ -12,7 +12,7 @@ steps:
   - - name: Static Code Analysis 3
       template: sonar-qube-3
     - name: Static Code Analysis 4
-      template: sonar-qube-3
+      template: sonar-qube-4
   - name: Vulnerability Scan
     template: choreo/trivy-scan@v1
 templates:
@@ -41,6 +41,10 @@ templates:
       echo "Starting SonarQube scan..."
       exit 1
   - name: sonar-qube-3
+    inlineScript: |
+      #!/bin/bash
+      echo "Starting SonarQube scan...222"
+  - name: sonar-qube-4
     inlineScript: |
       #!/bin/bash
       echo "Starting SonarQube scan...222"
