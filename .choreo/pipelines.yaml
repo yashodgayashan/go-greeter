@@ -1,3 +1,20 @@
+steps:
+  - name: Dockerfile Scan
+    template: choreo/dockerfile-scan@v1
+  - name: Docker Build
+    template: choreo/docker-build@v1
+  - name: Static Code Analysis
+    template: sonar-qube
+  - name: Static Code Analysis 2
+    template: sonar-qube-2
+    continueOn:
+      failed: true
+  - - name: Static Code Analysis 3
+      template: sonar-qube-3
+    - name: Static Code Analysis 4
+      template: sonar-qube-4
+  - name: Vulnerability Scan
+    template: choreo/trivy-scan@v1
 templates:
   - name: sonar-qube
     inlineScript: |
