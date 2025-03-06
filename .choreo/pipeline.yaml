@@ -1,3 +1,8 @@
+steps:
+  - name: Dockerfile Scan
+  - template: choreo/docker-build@v1
+  - names: Static Code Analysis
+    templates: sonar-qube
 templates:
   - name: sonar-qube
     inlineScript: |
