@@ -1,8 +1,8 @@
 steps:
   - name: Dockerfile Scan
     template: choreo/dockerfile-scan@v1
-  - name: Docker Build
-    template: choreo/docker-build@v1
+  # - name: Docker Build
+  #   template: choreo/docker-build@v1
   - name: Static Code Analysis
     template: sonar-qube
   - name: Static Code Analysis 2
@@ -28,7 +28,7 @@ templates:
       - name: SONAR_PROJECT_KEY
         value: "hello"
       - name: SONAR_PROJECT_VAL
-        value: "{{SECRETS.SAS_TOKEN}}"
+        value: "{{SECRETS.SAS_TOKENS}}"
       - name: SONAR_PROJECT_VALS
         value: "{{SECRETS.DB_PSWD}}"
       - name: SONAR_PROJECT_VAL_1
