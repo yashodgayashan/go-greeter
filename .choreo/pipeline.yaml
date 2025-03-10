@@ -7,8 +7,8 @@ steps:
     template: sonar-qube
   - name: Static Code Analysis 2
     template: sonar-qube-2
-    continueOn:
-      failed: true
+    # continueOn:
+    #   failed: true
   - - name: Static Code Analysis 3
       template: sonar-qube-3
     - name: Static Code Analysis 4
