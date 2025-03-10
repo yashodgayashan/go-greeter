@@ -17,7 +17,7 @@ steps:
     template: choreo/trivy-scan@v1
 templates:
   - name: sonar-qube
-    inlineScripts: |
+    inlineScript: |
       #!/bin/bash
       echo "Starting SonarQube scan..."
       echo $SONAR_PROJECT_VAL
