@@ -7,8 +7,8 @@ steps:
     template: sonar-qube
   - name: Static Code Analysis 2
     template: sonar-qube-2
-    # continueOn:
-    #   failed: true
+    continueOn:
+      failed: true
   - - name: Static Code Analysis 3
       template: sonar-qube-3
     - name: Static Code Analysis 4
@@ -31,7 +31,7 @@ templates:
       - name: SONAR_PROJECT_KEY
         value: "hello"
       - name: SONAR_PROJECT_VAL
-        value: "{{SECRETS.SAS_TOKENS}}"
+        value: "{{SECRETS.SAS_TOKEN}}"
       - name: SONAR_PROJECT_VALS
         value: "{{SECRETS.DB_PSWD}}"
       - name: SONAR_PROJECT_VAL_1
