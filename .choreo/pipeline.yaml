@@ -1,8 +1,8 @@
 steps:
   - name: Dockerfile Scan
     template: choreo/dockerfile-scan@v1
-  - name: Docker Build
-    template: choreo/docker-build@v1
+  # - name: Docker Build
+  #   template: choreo/docker-build@v1
   - name: Static Code Analysis
     template: sonar-qube
   - name: Static Code Analysis 2
