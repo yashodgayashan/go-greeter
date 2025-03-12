@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -15,7 +15,7 @@ func TestGreetHandler(t *testing.T) {
 	greet(w, req)
 
 	resp := w.Result()
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 
 	expected := "Hello, Alice!\n"
 	if resp.StatusCode != http.StatusOK {
@@ -34,7 +34,7 @@ func TestGreetHandlerWithoutName(t *testing.T) {
 	greet(w, req)
 
 	resp := w.Result()
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 
 	expected := "Hello, Stranger!\n"
 	if resp.StatusCode != http.StatusOK {
