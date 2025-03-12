@@ -1,0 +1,53 @@
+steps:
+  - name: Dockerfile Scan
+    template: choreo/dockerfile-scan@v1
+  # - name: Docker Build
+  #   template: choreo/docker-build@v1
+  - name: Static Code Analysis
+    template: sonar-qube
+  - name: Static Code Analysis 2
+    template: sonar-qube-2
+    continueOn:
+      failed: true
+  - - name: Static Code Analysis 3
+      template: sonar-qube-3
+    - name: Static Code Analysis 4
+      template: sonar-qube-4
+  - name: Vulnerability Scan
+    template: choreo/trivy-scan@v1
+templates:
+  - name: sonar-qube
+    inlineScript: |
+      #!/bin/bash
+      echo "Starting SonarQube scan..."
+      echo $SONAR_PROJECT_VAL
+      echo $SONAR_PROJECT_VALS
+      echo $SONAR_PROJECT_VAL_1
+      echo $SONAR_PROJECT_VAL_2
+      echo $SONAR_PROJECT_KEY
+      loadimages
+      echo $SONAR_PROJECT_KEY
+    env:
+      - name: SONAR_PROJECT_KEY
+        value: "hello"
+      - name: SONAR_PROJECT_VAL
+        value: "{{SECRETS.SAS_TOKENS}}"
+      - name: SONAR_PROJECT_VALS
+        value: "{{SECRETS.DB_PSWDS}}"
+      - name: SONAR_PROJECT_VAL_1
+        value: "{{VARIABLES.DB_HOST}}"
+      - name: SONAR_PROJECT_VAL_2
+        value: "{{VARIABLES.var_one}}"
+  - name: sonar-qube-2
+    inlineScript: |
+      #!/bin/bash
+      echo "Starting SonarQube scan..."
+      exit 1
+  - name: sonar-qube-3
+    inlineScript: |
+      #!/bin/bash
+      echo "Starting SonarQube scan...222"
+  - name: sonar-qube-4
+    inlineScript: |
+      #!/bin/bash
+      echo "Starting SonarQube scan...222"

@@ -15,3 +15,6 @@ templates:
       cd $REPOSITORY_DIR
       ls
       go test
+    env:
+      - name: GO_VERSION
+        value: "1.20"
