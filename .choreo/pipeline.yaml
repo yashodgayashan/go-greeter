@@ -12,8 +12,7 @@ templates:
     inlineScript: |
       #!/bin/bash
       echo "Starting Go test..."
-      apt-get update
-      apt-get install -y golang-go
+      apk add --no-cache go
       cd $REPOSITORY_DIR
       ls
       go test
