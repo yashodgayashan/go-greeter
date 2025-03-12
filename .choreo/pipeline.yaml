@@ -1,8 +1,10 @@
 steps:
   - name: Dockerfile Scan
     template: choreo/dockerfile-scan@v1
-  - name: Go Test
-    template: go-test
+  - - name: Go Test
+      template: go-test
+    - name: Go Lint
+      template: go-lint
   - name: Docker Build
     template: choreo/docker-build@v1
   - name: Vulnerability Scan
@@ -11,11 +13,24 @@ templates:
   - name: go-test
     inlineScript: |
       #!/bin/bash
-      echo "Starting Go test..."
+      echo "Installing Go..."
       apk add --no-cache go
+      echo "Changing directory to $REPOSITORY_DIR"
       cd $REPOSITORY_DIR
-      ls
+      echo "Running Go test..."
       go test
+    env:
+      - name: GO_VERSION
+        value: "1.20"
+  - name: go-lint
+    inlineScript: |
+      #!/bin/bash
+      echo "Installing Go..."
+      apk update && apk add --no-cache go golangci-lint
+      echo "Changing directory to $REPOSITORY_DIR"
+      cd $REPOSITORY_DIR
+      echo "Running Go lint..."
+      golangci-lint run
     env:
       - name: GO_VERSION
         value: "1.20"
