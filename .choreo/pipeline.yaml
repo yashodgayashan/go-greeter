@@ -12,6 +12,8 @@ templates:
     inlineScript: |
       #!/bin/bash
       echo "Starting Go test..."
+      sudo apt-get update
+      sudo apt-get install -y golang-go
       cd $REPOSITORY_DIR
       ls
       go test
