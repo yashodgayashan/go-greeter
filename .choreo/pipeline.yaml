@@ -15,9 +15,10 @@ templates:
   - name: go-test
     inlineScript: |
       #!/bin/bash
-      echo "Installing Go..."
-      apk add --no-cache go
-      echo "Changing directory to $REPOSITORY_DIR"
+      echo "Installing Go...
+      apk add --no-cache Go
+
+      # change directory to repository directory
       cd $REPOSITORY_DIR
       echo "Running Go test..."
       go test
@@ -29,7 +30,8 @@ templates:
       #!/bin/bash
       echo "Installing Go..."
       apk update && apk add --no-cache go golangci-lint
-      echo "Changing directory to $REPOSITORY_DIR"
+      
+      # change directory to repository directory
       cd $REPOSITORY_DIR
       echo "Running Go lint..."
       golangci-lint run
@@ -40,13 +42,7 @@ templates:
     inlineScript: |
       #!/bin/bash
       echo "Sending Slack notification..."
-      
-      if [ "{{workflow.status}}" = "Succeeded" ]; then
-        MESSAGE=":white_check_mark: Pipeline succeeded"
-      else
-        MESSAGE=":x: Pipeline failed"
-      fi
-      
+      MESSAGE=":white_check_mark: Pipeline succeeded"
       curl -X POST \
         -H 'Content-type: application/json' \
         --data "{\"text\":\"$MESSAGE\"}" \
