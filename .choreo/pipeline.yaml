@@ -15,10 +15,10 @@ templates:
   - name: go-test
     inlineScript: |
       #!/bin/bash
-      echo "Installing Go...
-      apk add --no-cache Go
+      echo "Installing Go..."
+      apk add --no-cache go
 
-      # change directory to repository directory
+      echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
       echo "Running Go test..."
       go test
@@ -30,8 +30,8 @@ templates:
       #!/bin/bash
       echo "Installing Go..."
       apk update && apk add --no-cache go golangci-lint
-      
-      # change directory to repository directory
+
+      echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
       echo "Running Go lint..."
       golangci-lint run
