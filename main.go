@@ -30,7 +30,7 @@ import (
 	"time"
 )
 
-// func main() {
+func main() {
 
 	serverMux := http.NewServeMux()
 	serverMux.HandleFunc("/greeter/greet", greet)
