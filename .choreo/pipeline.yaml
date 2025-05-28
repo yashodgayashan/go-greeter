@@ -1,0 +1,10 @@
+steps:
+  - name: Build Pipeline
+    containerSet:
+      containers:
+      - name: Dockerfile Scan
+        containerTemplate: choreo/dockerfile-scan@v1
+      - name: Docker Build
+        containerTemplate: choreo/docker-build@v1
+      - name: Vulnerability Scan
+        containerTemplate: choreo/trivy-scan@v1
