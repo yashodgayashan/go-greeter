@@ -9,8 +9,8 @@ steps:
     template: choreo/docker-build@v1
   - name: Vulnerability Scan
     template: choreo/trivy-scan@v1
-  - name: Slack Notification
-    template: slack-notification
+  # - name: Slack Notification
+  #   template: slack-notification
 templates:
   - name: go-test
     inlineScript: |
@@ -38,15 +38,15 @@ templates:
     env:
       - name: GO_VERSION
         value: "1.20"
-  - name: slack-notification
-    inlineScript: |
-      #!/bin/bash
-      echo "Sending Slack notification..."
-      MESSAGE=":white_check_mark: Pipeline succeeded"
-      curl -X POST \
-        -H 'Content-type: application/json' \
-        --data "{\"text\":\"$MESSAGE\"}" \
-        $SLACK_WEBHOOK_URL
-    env:
-      - name: SLACK_WEBHOOK_URL
-        value: "{{SECRETS.SLACK_WEBHOOK_URL}}"
+  # - name: slack-notification
+  #   inlineScript: |
+  #     #!/bin/bash
+  #     echo "Sending Slack notification..."
+  #     MESSAGE=":white_check_mark: Pipeline succeeded"
+  #     curl -X POST \
+  #       -H 'Content-type: application/json' \
+  #       --data "{\"text\":\"$MESSAGE\"}" \
+  #       $SLACK_WEBHOOK_URL
+  #   env:
+  #     - name: SLACK_WEBHOOK_URL
+  #       value: "{{SECRETS.SLACK_WEBHOOK_URL}}"
