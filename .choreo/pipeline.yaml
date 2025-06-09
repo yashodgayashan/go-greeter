@@ -15,7 +15,7 @@ steps:
 
 containerTemplates:
   - name: test-container
-    image: go-test:latest
+    image: golang:latest
     inlineScript: |
       #!/bin/sh
       cd $GOPATH/src/github.com/choreo-samples/go-test
