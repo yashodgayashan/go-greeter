@@ -8,21 +8,21 @@ steps:
         containerTemplate: choreo/docker-build@v1
       - name: Vulnerability Scan
         containerTemplate: choreo/trivy-scan@v1
-      # - name: Test
-      #   containerTemplate: test-container
-      # - name: Lint
-      #   containerTemplate: lint-container
+      - name: Test
+        containerTemplate: test-container
+      - name: Lint
+        containerTemplate: lint-container
 
-# containerTemplates:
-#   - name: test-container
-#     image: golang:latest
-#     inlineScript: |
-#       #!/bin/sh
-#       echo "testing"
-#     env:
-#       - name: GOPATH
-#         value: /go
-#   - name: lint-container
-#     inlineScript: |
-#       #!/bin/sh
-#       echo "formatting"
+containerTemplates:
+  - name: test-container
+    image: golang:latest
+    inlineScript: |
+      #!/bin/sh
+      echo "testing"
+    env:
+      - name: GOPATH
+        value: /go
+  - name: lint-container
+    inlineScript: |
+      #!/bin/sh
+      echo "formatting"
