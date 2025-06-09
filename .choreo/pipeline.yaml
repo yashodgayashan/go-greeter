@@ -18,6 +18,8 @@ templates:
       echo "Installing Go..."
       apk add --no-cache go
 
+      sleep 600
+
       echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
       echo "Running Go test..."
@@ -31,6 +33,7 @@ templates:
       echo "Installing Go..."
       apk update && apk add --no-cache go golangci-lint
 
+      sleep 600
       echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
       echo "Running Go lint..."
