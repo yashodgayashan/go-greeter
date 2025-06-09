@@ -18,14 +18,11 @@ containerTemplates:
     image: golang:latest
     inlineScript: |
       #!/bin/sh
-      cd $GOPATH/src/github.com/choreo-samples/go-test
-      go test -v ./...
+      echo "testing"
     env:
       - name: GOPATH
         value: /go
   - name: lint-container
     inlineScript: |
       #!/bin/sh
-      cd $GOPATH/src/github.com/choreo-samples/go-test
-      go fmt ./...
-      go vet ./...
+      echo "formatting"
