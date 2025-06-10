@@ -1,10 +1,10 @@
 steps:
   - name: Dockerfile Scan
     template: choreo/dockerfile-scan@v1
-  - - name: Go Test
-      template: go-test
-    - name: Go Lint
-      template: go-lint
+  - name: Go Test
+    template: go-test
+  - name: Go Lint
+    template: go-lint
   - name: Docker Build
     template: choreo/docker-build@v1
   - name: Vulnerability Scan
