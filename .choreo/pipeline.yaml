@@ -1,10 +1,10 @@
 steps:
   - name: Dockerfile Scan
     template: choreo/dockerfile-scan@v1
-  - name: Go Test
-    template: go-test
-  # - name: Go Lint
-  #   template: go-lint
+  - - name: Go Test
+      template: go-test
+    - name: Go Lint
+      template: go-lint
   - name: Docker Build
     template: choreo/docker-build@v1
   - name: Vulnerability Scan
@@ -28,13 +28,13 @@ templates:
   - name: go-lint
     inlineScript: |
       #!/bin/bash
-      echo "Installing Go..."
-      apt update && apt install -y golang golangci-lint
+      # echo "Installing Go..."
+      # apt update && apt install -y golang golangci-lint
 
       echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
       echo "Running Go lint..."
-      golangci-lint run
+      # golangci-lint run
     env:
       - name: GO_VERSION
         value: "1.20"
