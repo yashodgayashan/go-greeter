@@ -29,7 +29,7 @@ templates:
     inlineScript: |
       #!/bin/bash
       echo "Installing Go..."
-      apk update && apk add --no-cache go golangci-lint
+      apt update && apt install -y golang golangci-lint
 
       echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
