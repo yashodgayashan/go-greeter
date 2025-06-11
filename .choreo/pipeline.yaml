@@ -9,8 +9,8 @@ steps:
     template: choreo/docker-build@v1
   - name: Vulnerability Scan
     template: choreo/trivy-scan@v1
-  # - name: Slack Notification
-  #   template: slack-notification
+  - name: Slack Notification
+    template: slack-notification
 templates:
   - name: go-test
     inlineScript: |
