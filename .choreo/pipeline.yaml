@@ -16,7 +16,7 @@ templates:
     inlineScript: |
       #!/bin/bash
       echo "Installing Go..."
-      apk add --no-cache go
+      apt update && apt install -y golang
 
       echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
