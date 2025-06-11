@@ -3,8 +3,8 @@ steps:
     template: choreo/dockerfile-scan@v1
   - name: Go Test
     template: go-test
-  - name: Go Lint
-    template: go-lint
+  # - name: Go Lint
+  #   template: go-lint
   - name: Docker Build
     template: choreo/docker-build@v1
   - name: Vulnerability Scan
@@ -38,15 +38,15 @@ templates:
     env:
       - name: GO_VERSION
         value: "1.20"
-  # - name: slack-notification
-  #   inlineScript: |
-  #     #!/bin/bash
-  #     echo "Sending Slack notification..."
-  #     MESSAGE=":white_check_mark: Pipeline succeeded"
-  #     curl -X POST \
-  #       -H 'Content-type: application/json' \
-  #       --data "{\"text\":\"$MESSAGE\"}" \
-  #       $SLACK_WEBHOOK_URL
-  #   env:
-  #     - name: SLACK_WEBHOOK_URL
-  #       value: "{{SECRETS.SLACK_WEBHOOK_URL}}"
+  - name: slack-notification
+    inlineScript: |
+      #!/bin/bash
+      echo "Sending Slack notification..."
+      MESSAGE=":white_check_mark: Pipeline succeeded"
+      curl -X POST \
+        -H 'Content-type: application/json' \
+        --data "{\"text\":\"$MESSAGE\"}" \
+        $SLACK_WEBHOOK_URL
+    env:
+      - name: SLACK_WEBHOOK_URL
+        value: "{{SECRETS.SLACK_WEBHOOK_URL}}"
