@@ -14,6 +14,13 @@ steps:
         containerTemplate: lint-container
   - name: Static Code Analysis
     template: sonar-qube
+  - name: Post Build
+    containerSet:
+      containers:
+      - name: Lint
+        containerTemplate: lint-container-2
+      - name: Lint 2
+        containerTemplate: lint-container-3
 
 templates:
   - name: sonar-qube
@@ -34,6 +41,14 @@ containerTemplates:
       - name: GOPATH
         value: /go
   - name: lint-container
+    inlineScript: |
+      #!/bin/sh
+      echo "formatting"
+  - name: lint-container-2
+    inlineScript: |
+      #!/bin/sh
+      echo "formatting"
+  - name: lint-container-3
     inlineScript: |
       #!/bin/sh
       echo "formatting"
