@@ -18,7 +18,7 @@ templates:
       echo "Installing Go..."
       apt update && apt install -y golang
 
-      sleep 600
+      sleep 60
 
       echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
@@ -32,7 +32,7 @@ templates:
       #!/bin/bash
       echo "Installing Go..."
       # apt update && apt install -y golang golangci-lint
-      sleep 600
+      sleep 60
 
       echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
