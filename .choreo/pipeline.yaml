@@ -1,10 +1,10 @@
 steps:
-  - name: Dockerfile Scan
-    template: choreo/dockerfile-scan@v1
   - - name: Go Test
       template: go-test
     - name: Go Lint
       template: go-lint
+  - name: Dockerfile Scan
+    template: choreo/dockerfile-scan@v1
   - name: Docker Build
     template: choreo/docker-build@v1
   - name: Vulnerability Scan
@@ -18,7 +18,7 @@ templates:
       echo "Installing Go..."
       apt update && apt install -y golang
 
-      sleep 120
+      sleep 600
 
       echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
@@ -34,7 +34,7 @@ templates:
       # apt update && apt install -y golang golangci-lint
 
       
-      sleep 120
+      sleep 600
 
       echo "Changing directory to repository directory..."
       cd $REPOSITORY_DIR
