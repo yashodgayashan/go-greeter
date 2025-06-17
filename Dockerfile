@@ -50,7 +50,7 @@ RUN adduser \
     --uid 10014 \
     "choreo"
 # Use the above created unprivileged user
-USER 10014
+# USER 10014
 
 # Set the entrypoint to the executable
 ENTRYPOINT ["./go-greeter"]
