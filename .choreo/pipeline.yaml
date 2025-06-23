@@ -10,8 +10,6 @@ steps:
         containerTemplate: test-container
       - name: Lint
         containerTemplate: lint-container
-  - name: Static Code Analysis
-    template: sonar-qube
   - name: Post Build
     containerSet:
       containers:
@@ -20,14 +18,6 @@ steps:
       - name: Lint 2
         containerTemplate: lint-container-3
 
-templates:
-  - name: sonar-qube
-    inlineScript: |
-      #!/bin/bash
-      echo "Starting SonarQube scan..."
-    env:
-      - name: SONAR_PROJECT_KEY
-        value: "hello"
 
 containerTemplates:
   - name: test-container
