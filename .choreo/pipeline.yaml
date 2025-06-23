@@ -1,12 +1,15 @@
 steps:
-  - name: Buildpack Build
-    template: choreo/buildpack-build@v1
-  - name: Vulnerability Scan
-    template: choreo/trivy-scan@v1
-  - name: Go Test Step
-    template: test-container
-  - name: Go Lint Step
-    template: lint-container
+  - name: Build Steps
+    containerSet:
+      containers:
+      - name: Buildpack Build
+        containerTemplate: choreo/buildpack-build@v1
+      - name: Vulnerability Scan
+        containerTemplate: choreo/trivy-scan@v1
+      - name: Test
+        containerTemplate: test-container
+      - name: Lint
+        containerTemplate: lint-container
   - name: Slack Notification
     template: slack-notification
 
@@ -23,6 +26,8 @@ templates:
     env:
       - name: SLACK_WEBHOOK_URL
         value: "{{SECRETS.SLACK_WEBHOOK_URL}}"
+
+containerTemplates:
   - name: test-container
     image: golang:latest
     inlineScript: |
@@ -35,6 +40,7 @@ templates:
       - name: GO_VERSION
         value: "{{VARIABLES.GO_VERSION}}"
   - name: lint-container
+    image: ubuntu:22.04
     inlineScript: |
       #!/bin/bash
       set -e
