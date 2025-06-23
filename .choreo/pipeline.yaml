@@ -10,17 +10,22 @@ steps:
         containerTemplate: test-container
       - name: Lint
         containerTemplate: lint-container
-  - name: Static Code Analysis
-    template: sonar-qube
+  - name: Slack Notification
+    template: slack-notification
 
 templates:
-  - name: sonar-qube
+  - name: slack-notification
     inlineScript: |
       #!/bin/bash
-      echo "Starting SonarQube scan..."
+      echo "Sending Slack notification..."
+      MESSAGE=":white_check_mark: Pipeline succeeded"
+      curl -X POST \
+        -H 'Content-type: application/json' \
+        --data "{\"text\":\"$MESSAGE\"}" \
+        $SLACK_WEBHOOK_URL
     env:
-      - name: SONAR_PROJECT_KEY
-        value: "hello"
+      - name: SLACK_WEBHOOK_URL
+        value: "{{SECRETS.SLACK_WEBHOOK_URL}}"
 
 containerTemplates:
   - name: test-container
@@ -63,7 +68,6 @@ containerTemplates:
       
       # Install golangci-lint
       curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /usr/local/bin v1.54.2
-      
       
       # Verify linting tools installation
       golangci-lint version
