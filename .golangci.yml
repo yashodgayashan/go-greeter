@@ -1,0 +1,46 @@
+run:
+  timeout: 5m
+  tests: true
+
+linters:
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - typecheck
+    - unused
+    - gofmt
+    - goimports
+    - misspell
+    - goconst
+    - gosec
+    - gocritic
+    - stylecheck
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+  
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+
+issues:
+  exclude:
+    # Exclude test file error checking patterns
+    - "Error return value of.*io\\.ReadAll.*is not checked"
+    - "Error return value of.*json\\.Marshal.*is not checked"
+    - "string .* has .* occurrences.*make it a constant.*_test\\.go"
+  
+  exclude-rules:
+    # Additional exclusions for test files
+    - path: _test\.go
+      linters:
+        - gosec
+        - goconst
+  
+  max-issues-per-linter: 0
+  max-same-issues: 0 
