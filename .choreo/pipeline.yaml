@@ -1,5 +1,5 @@
 steps:
-  - name: Build Pipeline
+  - name: Build Steps
     containerSet:
       containers:
       - name: Buildpack Build
