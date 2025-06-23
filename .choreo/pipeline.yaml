@@ -3,9 +3,9 @@ steps:
     template: choreo/buildpack-build@v1
   - name: Vulnerability Scan
     template: choreo/trivy-scan@v1
-  - name: Test
+  - name: Go Test Step
     template: test-container
-  - name: Lint
+  - name: Go Lint Step
     template: lint-container
   - name: Slack Notification
     template: slack-notification
@@ -35,7 +35,6 @@ templates:
       - name: GO_VERSION
         value: "{{VARIABLES.GO_VERSION}}"
   - name: lint-container
-    image: ubuntu:22.04
     inlineScript: |
       #!/bin/bash
       set -e
