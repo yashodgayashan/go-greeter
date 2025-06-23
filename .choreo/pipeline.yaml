@@ -27,13 +27,13 @@ containerTemplates:
     image: golang:latest
     inlineScript: |
       #!/bin/sh
-      echo "Installing Go version {{VARIABLES.GO_VERSION}} and running tests..."
+      echo "Installing Go version $GO_VERSION and running tests..."
       go version
       cd $REPOSITORY_DIR
       make test
     env:
       - name: GO_VERSION
-        value: {{VARIABLES.GO_VERSION}}
+        value: "{{VARIABLES.GO_VERSION}}"
   - name: lint-container
     inlineScript: |
       #!/bin/sh
