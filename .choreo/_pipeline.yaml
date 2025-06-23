@@ -1,0 +1,75 @@
+steps:
+  - name: Buildpack Build
+    template: choreo/buildpack-build@v1
+  - name: Vulnerability Scan
+    template: choreo/trivy-scan@v1
+  - name: Test
+    template: test-container
+  - name: Lint
+    template: lint-container
+  - name: Slack Notification
+    template: slack-notification
+
+templates:
+  - name: slack-notification
+    inlineScript: |
+      #!/bin/bash
+      echo "Sending Slack notification..."
+      MESSAGE=":white_check_mark: Pipeline succeeded"
+      curl -X POST \
+        -H 'Content-type: application/json' \
+        --data "{\"text\":\"$MESSAGE\"}" \
+        $SLACK_WEBHOOK_URL
+    env:
+      - name: SLACK_WEBHOOK_URL
+        value: "{{SECRETS.SLACK_WEBHOOK_URL}}"
+  - name: test-container
+    image: golang:latest
+    inlineScript: |
+      #!/bin/sh
+      echo "Installing Go version $GO_VERSION and running tests..."
+      go version
+      cd $REPOSITORY_DIR
+      make test
+    env:
+      - name: GO_VERSION
+        value: "{{VARIABLES.GO_VERSION}}"
+  - name: lint-container
+    image: ubuntu:22.04
+    inlineScript: |
+      #!/bin/bash
+      set -e
+      echo "Installing Go version $GO_VERSION and linting tools..."
+      
+      # Update package list
+      apt-get update -y
+      
+      # Install required packages
+      apt-get install -y wget curl make git
+      
+      # Download and install Go
+      GO_ARCHIVE="go${GO_VERSION}.linux-amd64.tar.gz"
+      wget "https://golang.org/dl/${GO_ARCHIVE}"
+      tar -C /usr/local -xzf "${GO_ARCHIVE}"
+      rm "${GO_ARCHIVE}"
+      
+      # Set up Go environment
+      export PATH="/usr/local/go/bin:$PATH"
+      export GOPATH="/go"
+      export GOROOT="/usr/local/go"
+      
+      # Verify Go installation
+      go version
+      
+      # Install golangci-lint
+      curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /usr/local/bin v1.54.2
+      
+      # Verify linting tools installation
+      golangci-lint version
+      
+      # Navigate to repository and run lint
+      cd $REPOSITORY_DIR
+      make lint-comprehensive
+    env:
+      - name: GO_VERSION
+        value: "{{VARIABLES.GO_VERSION}}"
