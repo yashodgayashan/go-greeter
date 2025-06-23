@@ -6,7 +6,7 @@ steps:
         containerTemplate: test-container
       - name: Go Lint Step
         containerTemplate: lint-container
-      - name: Buildpack Build
+      - name: Build Component
         containerTemplate: choreo/buildpack-build@v1
       - name: Vulnerability Scan
         containerTemplate: choreo/trivy-scan@v1
