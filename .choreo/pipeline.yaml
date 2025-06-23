@@ -35,10 +35,11 @@ containerTemplates:
       - name: GO_VERSION
         value: "{{VARIABLES.GO_VERSION}}"
   - name: lint-container
+    image: ubuntu:22.04
     inlineScript: |
       #!/bin/bash
       set -e
-      echo "Installing Go version $GO_VERSION and running lint..."
+      echo "Installing Go version $GO_VERSION and linting tools..."
       
       # Update package list
       apt-get update -y
@@ -59,6 +60,16 @@ containerTemplates:
       
       # Verify Go installation
       go version
+      
+      # Install golangci-lint
+      curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /usr/local/bin v1.54.2
+      
+      # Install gosec (optional security scanner)
+      go install github.com/securecodewarrior/gosec/v2/cmd/gosec@latest
+      export PATH="/go/bin:$PATH"
+      
+      # Verify linting tools installation
+      golangci-lint version
       
       # Navigate to repository and run lint
       cd $REPOSITORY_DIR
