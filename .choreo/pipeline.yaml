@@ -36,5 +36,11 @@ containerTemplates:
         value: "{{VARIABLES.GO_VERSION}}"
   - name: lint-container
     inlineScript: |
-      #!/bin/sh
-      echo "formatting"
+      #!/bin/bash
+      echo "Installing Go version $GO_VERSION and running tests..."
+      go version
+      cd $REPOSITORY_DIR
+      make lint-comprehensive
+    env:
+      - name: GO_VERSION
+        value: "{{VARIABLES.GO_VERSION}}"
