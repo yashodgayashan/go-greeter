@@ -1,12 +1,12 @@
-schemaVersion: "1.1"
+schemaVersion: "1.2"
 endpoints:
-  - name: go-greeter-803
-    displayName: Go Greeter
-    service:
-      basePath: /
-      port: 9090
-    type: REST
-    networkVisibilities:
-      - Project
-      - Public
-    schemaFilePath: openapi.yaml
+    - name: go-greeter-803
+      displayName: Go Greeter
+      service:
+        basePath: /
+        port: 9090
+      type: REST
+      networkVisibilities:
+        - Project
+        - Public
+      schemaFilePath: openapi.yaml
