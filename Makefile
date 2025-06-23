@@ -148,6 +148,53 @@ test-api: ## Test API endpoints manually (requires server to be running)
 	curl -s "http://localhost:9090/greeter/farewell?name=World"
 	@echo ""
 
+# SonarQube commands
+.PHONY: sonar-scan
+sonar-scan: ## Run SonarQube analysis
+	@echo "Running SonarQube scan..."
+	./sonar-scan.sh
+
+.PHONY: sonar-prepare
+sonar-prepare: ## Prepare project for SonarQube analysis (coverage + reports)
+	@echo "Preparing for SonarQube analysis..."
+	go test -v -coverprofile=coverage.out ./...
+	golangci-lint run --out-format=checkstyle > checkstyle-report.xml 2>/dev/null || true
+	go vet ./... > vet-report.txt 2>&1 || true
+	@echo "Reports generated: coverage.out, checkstyle-report.xml, vet-report.txt"
+
+.PHONY: sonar-clean
+sonar-clean: ## Clean SonarQube generated files
+	@echo "Cleaning SonarQube files..."
+	rm -f coverage.out coverage.html checkstyle-report.xml vet-report.txt
+	rm -rf .scannerwork
+
+.PHONY: sonar-up
+sonar-up: ## Start SonarQube server using Docker Compose
+	@echo "Starting SonarQube server..."
+	docker-compose -f docker-compose.sonar.yml up -d
+	@echo "SonarQube starting up at http://localhost:9000"
+	@echo "Default credentials: admin/admin"
+
+.PHONY: sonar-down
+sonar-down: ## Stop SonarQube server
+	@echo "Stopping SonarQube server..."
+	docker-compose -f docker-compose.sonar.yml down
+
+.PHONY: sonar-logs
+sonar-logs: ## View SonarQube server logs
+	docker-compose -f docker-compose.sonar.yml logs -f sonarqube
+
+# CodeQL commands
+.PHONY: codeql-analysis
+codeql-analysis: ## Run CodeQL static analysis
+	@echo "Running CodeQL analysis..."
+	./codeql-analysis.sh
+
+.PHONY: codeql-clean
+codeql-clean: ## Clean CodeQL generated files
+	@echo "Cleaning CodeQL files..."
+	rm -rf codeql-db codeql-results codeql-go-queries
+
 # Install linting tools
 .PHONY: install-tools
 install-tools: ## Install development tools
