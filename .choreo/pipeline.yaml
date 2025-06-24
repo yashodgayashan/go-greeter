@@ -17,7 +17,6 @@ steps:
       containers:
       - name: Finalizer
         containerTemplate: finalizer
-        
 
 templates:
   - name: slack-notification
