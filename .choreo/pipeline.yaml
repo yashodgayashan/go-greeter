@@ -40,11 +40,29 @@ containerTemplates:
       - name: GO_VERSION
         value: "{{VARIABLES.GO_VERSION}}"
   - name: lint-container
-    image: golang:latest
     inlineScript: |
       #!/bin/bash
       set -e
-      echo "Installing Go version $GO_VERSION and running tests..."
+      echo "Installing Go version $GO_VERSION and linting tools..."
+      
+      # Update package list
+      apt-get update -y
+      
+      # Install required packages
+      apt-get install -y wget curl make git
+      
+      # Download and install Go
+      GO_ARCHIVE="go${GO_VERSION}.linux-amd64.tar.gz"
+      wget -q "https://golang.org/dl/${GO_ARCHIVE}"
+      tar -C /usr/local -xzf "${GO_ARCHIVE}"
+      rm "${GO_ARCHIVE}"
+      
+      # Set up Go environment
+      export PATH="/usr/local/go/bin:$PATH"
+      export GOPATH="/go"
+      export GOROOT="/usr/local/go"
+      
+      # Verify Go installation
       go version
       
       # Install golangci-lint
