@@ -12,6 +12,12 @@ steps:
         containerTemplate: choreo/trivy-scan@v1
   - name: Slack Notification
     template: slack-notification
+  - name: Post Build Steps
+    containerSet:
+      containers:
+      - name: Finalizer
+        containerTemplate: finalizer
+        
 
 templates:
   - name: slack-notification
@@ -77,3 +83,8 @@ containerTemplates:
     env:
       - name: GO_VERSION
         value: "{{VARIABLES.GO_VERSION}}"
+  - name: finalizer
+    inlineScript: |
+      #!/bin/sh
+      echo "Finalizing Step"
+  
